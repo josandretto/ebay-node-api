@@ -54,6 +54,21 @@ Ebay.prototype = {
 
     },
 
+    findCompletedItems: function (keyword) {
+        if (!keyword) throw new Error("Keyword is missing, Keyword is required");
+        this.options.name = keyword;
+        this.options.operationName = "findCompletedItems";
+        this.options.param = "keywords";
+        let url = urlObject.buildSearchUrl(this.options);
+        console.log(url);
+        return getRequest(url).then((data) => {
+            let result = JSON.parse(data);
+            return result["findCompletedItemsResponse"];
+        }, (error) => {
+            console.log(error);
+        })
+    },
+
     getAllCategories: function (categoryID) {
         //console.log(url);
         this.options.name = categoryID ? categoryID : -1;
